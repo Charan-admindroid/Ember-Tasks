@@ -1,0 +1,57 @@
+<div class="add-container">
+    <h2 class="add-h2">Add Student</h2>
+    <form class="add-form" {{on "submit" this.addStudent}}>
+        <div class="add-form-1 add-form-div">
+            <label for="name">Name:</label>
+            <input value={{this.newStudent.name}} {{on 'input' (fn this.updateStudent 'name')}} type="text" placeholder="Enter your name" id="name" required/>
+        </div>
+        <div class="add-form-2 add-form-div">
+            <label for="rollno">Roll No:</label>
+            <input type="text" value={{this.newStudent.rollno}} {{on 'input' (fn this.updateStudent 'rollno')}} placeholder="Enter your roll no" id="rollno" required/>
+        </div>
+        <div class="add-form-3 add-form-div">
+            <label for="dept">Department:</label>
+            <PowerSelect
+                @searchEnabled={{true}}
+                @options={{this.departments}} 
+                @selected={{this.newStudent.dept}} 
+                @onChange={{this.updateDepartment}}
+                @allowClear={{true}}
+                @placeholder="Select Department"
+                as |dept|
+            >
+                {{dept}}
+            </PowerSelect>
+        </div>
+        <div class="add-form-4 add-form-div">
+            <label for="dob">DOB:</label>
+            <input type="date" value={{this.newStudent.dob}} {{on 'input' (fn this.updateStudent 'dob')}} placeholder="DOB" id="dob" required/>
+        </div>
+        <div class="add-form-3">
+            <label for="interests" class="interest">
+                Interest:
+            </label>
+            <PowerSelectMultiple
+                @searchEnabled={{true}}
+                @options={{this.Interests}}
+                @selected={{this.newStudent.interests}}
+                @onChange={{this.updateInterest}}
+                @allowClear={{true}}
+                @placeholder="Select Interest"
+                as |interest|
+            >
+                {{interest}}
+            </PowerSelectMultiple>
+        </div>
+        <div class="add-form-5 add-form-div">
+            <label for="city">
+                City:
+            </label>
+            <input type="text" value={{this.newStudent.address}} {{on 'input' (fn this.updateStudent 'address')}} placeholder="Enter your city" id="city" required/>
+        </div>
+        <div class="add-form-btn">
+            <button type="submit" {{on-key "Enter"}}>Add Student</button>
+            <button type="button" {{on 'click' this.student}} {{on-key 'Escape'}}>Cancel</button>
+        </div>
+    </form>
+</div>

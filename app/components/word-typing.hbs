@@ -1,0 +1,30 @@
+<div class="container">
+    {{#each this.flashMessages.queue as |flash|}}
+        <FlashMessage @flash={{flash}} class="round"/>
+    {{/each}}
+    {{on-document "keypress" (if-key 'Enter' this.start)}}
+    {{!-- <h2 class="timer">
+        Timer: {{this.minutes}}:{{this.seconds}}
+    </h2> --}}
+    <div id="liquid-bind-demo">
+        Time: 
+        <LiquidBind @value={{this.minutes}} />:
+        <LiquidBind @value={{this.seconds}} />
+    </div>
+    <h4>
+        {{#if this.isStarted}}
+        Level: {{this.level}}
+        {{else}}
+            Press <span class="span">Enter</span> to Start Game
+            {{/if}}
+
+    </h4>
+    <div class="word-container">
+         <textarea class="c-word" disabled>
+            {{this.word}}
+        </textarea>
+        <textarea placeholder="Type here...." class="c-word" value={{this.value}} {{on "input" this.updateWord}} disabled={{unless this.isStarted true}}>
+            
+        </textarea>
+    </div>
+</div>

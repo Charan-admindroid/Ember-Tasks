@@ -1,0 +1,28 @@
+<button class="game-btn" type="button" {{on "click" this.generate}}>
+    Generate one random number
+</button>
+
+{{#if this.isTrue}}
+    {{#if this.see}}
+        {{#if (eq this.number this.randomNumber )}}
+            <p class="game-p">Awesome! You are right!</p>
+        {{/if}}
+        {{#if (gt this.number this.randomNumber )}}
+            <p class="game-p">Guessed number is large!</p>
+        {{/if}}
+        {{#if (lt this.number this.randomNumber )}}
+            <p class="game-p">Guess number is small</p>
+        {{/if}}
+    {{/if}}
+
+    <div class="game-div">
+        {{#unless this.see}}
+            <p>Guess the number between 0 and 100</p>
+        {{/unless}}
+        <div class="game-inner">
+            <input placeholder="Guess Random number between 1 to 100" value={{this.number}} {{on "input" this.updateNumber}} class="game-input" />
+            <button class="formbtn" type="button" {{on "click" this.check}} {{on-key 'Enter'}}>Check</button>
+        </div>
+        
+    </div>
+{{/if}}

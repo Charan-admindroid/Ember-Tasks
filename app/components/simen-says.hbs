@@ -1,0 +1,27 @@
+<body class="{{if this.wrong 'wrong'}}">
+    {{#each this.flashMessages.queue as |flash|}}
+        <FlashMessage @flash={{flash}} class="round"/>
+    {{/each}}
+    <div class="game-container">
+        <h2 class="game-heading">{{@title}}</h2>
+        <div class="game-inner-simen">
+            <div class="game-score">
+                <h3 class="game-heading {{if this.started "display"}}" >
+                    Press any key to start the game
+                </h3>
+                {{on-document 'keypress' this.start}}
+            </div>
+            <div class="game-colors">
+                <div class="game-1" >
+                    <div class="color-div blue {{if this.activeBoxBlue 'flash'}}"{{on "click" (fn this.color.perform "blue")}}>Blue</div>
+                    <div class="color-div green {{if this.activeBoxGreen 'flash'}}" {{on "click" (fn this.color.perform "green")}}>Green</div>
+                </div>
+                
+                <div class="game-2">
+                    <div class="color-div red {{if this.activeBoxRed 'flash'}}" {{on "click" (fn this.color.perform "red")}}>Red</div>
+                    <div class="color-div orange {{if this.activeBoxOrange 'flash'}}" {{on "click" (fn this.color.perform "orange")}}>Orange</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

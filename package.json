@@ -33,9 +33,12 @@
     "@ember/test-helpers": "^3.3.0",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
+    "bootstrap": "^5.3.5",
     "broccoli-asset-rev": "^3.0.0",
     "concurrently": "^8.2.2",
     "ember-auto-import": "^2.7.3",
+    "ember-basic-dropdown": "^8.6.0",
+    "ember-bootstrap": "^6.5.0",
     "ember-cli": "~5.9.0",
     "ember-cli-app-version": "^6.0.1",
     "ember-cli-babel": "^8.2.0",
@@ -45,11 +48,14 @@
     "ember-cli-inject-live-reload": "^2.1.0",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-terser": "^4.0.2",
+    "ember-concurrency": "^4.0.3",
     "ember-data": "~5.3.3",
     "ember-fetch": "^8.1.2",
+    "ember-keyboard": "^9.0.1",
     "ember-load-initializers": "^2.1.2",
     "ember-modifier": "^4.1.0",
     "ember-page-title": "^8.2.3",
+    "ember-power-select": "^8.7.0",
     "ember-qunit": "^8.0.2",
     "ember-resolver": "^11.0.1",
     "ember-source": "~5.9.0",
@@ -76,5 +82,12 @@
   },
   "ember": {
     "edition": "octane"
+  },
+  "dependencies": {
+    "@html-next/vertical-collection": "^4.0.2",
+    "ember-cli-flash": "^4.0.0",
+    "ember-click-outside": "^6.1.0",
+    "ember-truth-helpers": "^3.0.0",
+    "liquid-fire": "github:kumkanillam/liquid-fire#embroider-from35"
   }
 }

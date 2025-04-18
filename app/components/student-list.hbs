@@ -1,0 +1,74 @@
+<div class="list-container">
+    {{#each this.flashMessages.queue as |flash|}}
+        <FlashMessage @flash={{flash}} class="round"/>
+    {{/each}}
+    <h1>List of Students</h1>
+    <div class="list-div-1" {{on-click-outside this.clearText exceptSelector=".list-table-container"}}>
+        <PowerSelectMultiple
+            @options={{this.columns}}
+            @onChange={{this.updateColumn}}
+            @selected={{this.selectedColumns}}
+            @allowClear={{true}}
+            @placeholder="Select columns..."
+            class="list-select"
+            as |column|
+        >
+            {{column}}
+        </PowerSelectMultiple>
+        <input placeholder="Search" type="text" value={{this.search}} {{on 'input' this.searchText.perform}}/>
+        <button type="button" {{on "click" this.clearText}} {{on-key "Enter"}}>Clear</button>
+    </div>
+    <div class="list-div-2">
+        <button type="button" {{on "click" this.addStudent}}>Add Student</button>
+        <button type="button" {{on "click" this.deleteAll}}>Delete All</button>
+    </div>
+    <div class="list-table-container">
+        <table class="list-table">
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Roll No</th>
+                    <th>Name</th>
+                    <th>Department</th>
+                    <th>DOB</th>
+                    <th>Interests</th>
+                    <th>Address</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <VerticalCollection
+                    @items={{this.Students}}
+                    @estimateHeight={{47}}
+                    @staticHeight={{false}}
+                    @bufferSize={{4}}
+                    @renderAll={{false}}
+                    @containerSelector="body"
+                    @firstReached={{perform this.firstReached}}
+                    @lastReached={{perform this.lastReached}}
+                    as |student index|
+                >
+                    <tr>
+                        <td>{{add index 1}}</td>
+                        <td>{{student.rollno}}</td>
+                        <td>{{student.name}}</td>
+                        <td>{{student.dept}}</td>
+                        <td>{{student.dob}}</td>
+                        <td>
+                            {{#each (slice student.interests 0 3) as |interest index|}}
+                                {{if index ','}} {{interest}}
+                            {{/each}}
+                        </td>
+                        <td>{{student.address}}</td>
+                        <td>
+                            <div class="table-div">
+                                <LinkTo @route="student.edit" @model={{student.id}} class="edit btn">Edit</LinkTo>
+                                <button type="button" class="btn" {{on "click" (fn this.deleteStudent student)}}>Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                </VerticalCollection>
+            </tbody>
+        </table>
+    </div>
+</div>

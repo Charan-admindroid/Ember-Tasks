@@ -1,0 +1,37 @@
+<div class="index-container">
+    <h1 class="index-student-h1">Welcome</h1>
+    <div class="index-inner-container">
+        <div class="index-students text">
+            <h2 class="index-student-div">Do you want to Explore Students</h2>
+            <button class="index-student-btn" type="button" {{on "click" this.students.perform}}>
+                {{#if this.isStudents}}
+                    Loading...
+                {{else}}
+                    Explore Students
+                {{/if}}
+            </button>
+        </div>
+        <div class="index-game text">
+            <h2 class="index-game-h2">Do you want to play games</h2>
+            <button class="index-game-btn" type="button" {{on "click" this.game.perform}}>
+                {{#if this.isGame}}
+                    Loading...
+                {{else}}
+                    Play Game
+                {{/if}}
+            </button>
+        </div>
+        <div class="index-explore text">
+            <h2 class="index-properties-h2">Do you want to Explore Some Properties</h2>
+            <button class="index-properties-btn" type="button" {{on "click" this.properties.perform}}>
+                {{#if this.isProperties}}
+                    Loading...
+                {{else}}
+                    Explore Properties
+                {{/if}}
+            </button>
+        </div>
+    </div>
+</div>
+
+{{yield}}
