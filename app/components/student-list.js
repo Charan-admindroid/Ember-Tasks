@@ -18,7 +18,7 @@ export default class StudentList extends Component{
 
 
     @tracked columns=["rollno","name","dept","address","interests"];
-    @tracked selectedColumns=["name"];
+    @tracked selectedColumns=[];
 
     get Students(){
         console.log(this.studentData.students);
@@ -78,13 +78,25 @@ export default class StudentList extends Component{
         if(!this.search){
            this.allStudents=[...this.studentData.students];
         }else{
-           yield this.allStudents=this.studentData.students.filter((student)=>{
-            return this.selectedColumns.some((col) => {
-                let value = student[col];
-                if (value == null) return false;
-                return String(value).toLowerCase().includes(this.search.toLowerCase());
-              });
-           });
+            yield this.allStudents=this.studentData.students.filter((student)=>{
+                if(this.selectedColumns.length==0){
+                    return(
+                        student.name.toLowerCase().includes(this.search.toLowerCase())||
+                        student.rollno.includes(this.search)||
+                        student.dept.toLowerCase().includes(this.search.toLowerCase())||
+                        student.address.toLowerCase().includes(this.search.toLowerCase())
+                    )
+                }else{
+                    return this.selectedColumns.some((col) => {
+                        let value = student[col];
+                        if (value == null) {
+                            return false;
+                        }else{
+                            return String(value).toLowerCase().includes(this.search.toLowerCase());
+                        }
+                    });
+                }
+            });
         }
         console.log("After search");
         this.hasMore=this.allStudents.length>this.page;
