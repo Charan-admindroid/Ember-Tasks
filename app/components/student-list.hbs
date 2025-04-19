@@ -26,14 +26,17 @@
         <table class="list-table">
             <thead>
                 <tr>
-                    <th>S.No</th>
+                    {{!-- <th>S.No</th>
                     <th>Roll No</th>
                     <th>Name</th>
                     <th>Department</th>
                     <th>DOB</th>
                     <th>Interests</th>
                     <th>Address</th>
-                    <th>Action</th>
+                    <th>Action</th> --}}
+                    {{#each this.tableColumns as |col index|}}
+                        <th {{on "click" (fn this.columnSort index)}}>{{col}}</th>
+                    {{/each}}
                 </tr>
             </thead>
             <tbody>

@@ -15,19 +15,59 @@ export default class StudentList extends Component{
     @tracked hasMore=true;
     @service router;
     @service flashMessages;
+    @tracked isSort=false;
+    @tracked sortField=null;
 
+    @tracked tableColumns=["S.No","Roll No","Name","Department","DOB","Interests","Address","Action"];
+    @tracked sortable=['id','rollno','name','dept','dob','interests','address','action'];
 
     @tracked columns=["rollno","name","dept","address","interests"];
     @tracked selectedColumns=[];
 
-    get Students(){
-        console.log(this.studentData.students);
-        return this.allStudents.slice(0,this.currentPage*this.page);
-    }
+    get Students() {
+        let students = [...this.allStudents];
+        console.log("Get Students");
+        if (this.isSort) {
+            if(this.sortField==='id'||this.sortField==='action'){
+                return students;
+            }
+            if(this.sortField==="interests"){
+                students=[...students].sort((a,b)=>{
+                    let aJoin=a.interests.join(',')
+                    console.log(aJoin);
+                    let bJoin=b.interests.join(',')
+                    console.log(bJoin);
+                    return aJoin.localeCompare(bJoin);
+                })
+            }
+            else if(this.isSort==='dob'){
+                students=[...students].sort((a,b)=>{
+                    let aDate=new Date(a.dob);
+                    let bDate=new Date(b.dob);
+                    return aDate.localeCompare(bDate);
+                })
+            }
+            else{
+                students = [...students].sort((a, b) => a[this.sortField].localeCompare(b[this.sortField]));
+            }
+        }
+      
+        console.log(students);
+        return students.slice(0, this.currentPage * this.page);
+      }
+      
 
     constructor(){
         super(...arguments);
         this.loadInitial.perform();
+    }
+
+    @action
+    columnSort(index){
+        console.log("this.sort",this.isSort);
+        this.isSort=!this.isSort;
+        this.sortField=this.sortable[index];
+        console.log(this.sortField);
     }
 
     @task

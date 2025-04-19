@@ -81,6 +81,7 @@ th{
     font-size: 25px;
     font-weight: 700;
     color: rgb(218 165 32);
+    cursor: pointer;
 }
 
 td{
