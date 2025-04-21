@@ -3,6 +3,7 @@ import Service from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 export default class StudentDataService extends Service {
+    @tracked columns=["S.No","Roll No","Name","Department","DOB","Interests","Address","Action"]
     @tracked students=[
         { id: 1, name: 'Charan', rollno: '21AT1A05E9', dob: '2003-11-17', dept: 'CSE', address: 'Kurnool', interests: ['Coding', 'Cricket', 'Reading'] },
         { id: 2, name: 'Pavan', rollno: '21AT1A05D6', dob: '2002-02-10', dept: 'ECE', address: 'Juturu', interests: ['Football', 'Music', 'Photography'] },

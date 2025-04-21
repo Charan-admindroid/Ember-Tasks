@@ -84,6 +84,7 @@ th{
     cursor: pointer;
 }
 
+
 td{
     padding:8px;
     font-size: 16px;
@@ -143,6 +144,9 @@ td{
   width:300px !important;
 }
 
+.column-select .ember-power-select-trigger{
+  width:300px !important;
+}
 
 
 .list-div-1{
@@ -171,9 +175,14 @@ td{
 
 .list-div-2{
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
     align-items: center;
     margin:20px 0;
+    gap: 5rem;
+}
+
+.list-div-2 .ember-power-select-trigger{
+  width: 300px;
 }
 
 .list-div-2 button{
@@ -279,6 +288,7 @@ input:focus{
     box-shadow: 0 4px 6px rgb(0 0 0 / 10%) !important;
     font-size: 16px;
     font-weight:600;
+    padding:10px;
   }
   
   
@@ -339,6 +349,7 @@ input:focus{
     gap:30px 30px;
     justify-content: center;
   }
+
 
   .color-div{
     height: 225px;
@@ -531,5 +542,3 @@ input:focus{
   font-weight: 600;
   cursor: pointer;
 }
-
-

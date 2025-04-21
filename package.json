@@ -60,6 +60,7 @@
     "ember-resolver": "^11.0.1",
     "ember-source": "~5.9.0",
     "ember-template-lint": "^5.13.0",
+    "ember-truth-helpers": "^4.0.3",
     "ember-welcome-page": "^7.0.2",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
@@ -87,7 +88,6 @@
     "@html-next/vertical-collection": "^4.0.2",
     "ember-cli-flash": "^4.0.0",
     "ember-click-outside": "^6.1.0",
-    "ember-truth-helpers": "^3.0.0",
     "liquid-fire": "github:kumkanillam/liquid-fire#embroider-from35"
   }
 }

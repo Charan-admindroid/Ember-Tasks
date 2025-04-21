@@ -20,22 +20,35 @@
     </div>
     <div class="list-div-2">
         <button type="button" {{on "click" this.addStudent}}>Add Student</button>
-        <button type="button" {{on "click" this.deleteAll}}>Delete All</button>
+        <button type="button" {{on "click" this.deleteAll}} class="list-div-del">Delete All</button>
+        <PowerSelect
+            @options={{this.originalColumn}}
+            @selected={{null}}             {{!-- avoid default behavior --}}
+            @onChange={{fn this.toggleColumn}}
+            @placeholder="Customise columns..."
+            @searchEnabled={{false}}
+            @closeOnSelect={{false}}
+            as |col|
+            >
+            <label>
+                <input 
+                    type="checkbox" 
+                    checked={{this.checked col}} 
+                    {{on "change" (fn this.toggleColumn col)}}
+                />
+                {{col}}
+            </label>
+        </PowerSelect>
     </div>
+    
     <div class="list-table-container">
         <table class="list-table">
             <thead>
                 <tr>
-                    {{!-- <th>S.No</th>
-                    <th>Roll No</th>
-                    <th>Name</th>
-                    <th>Department</th>
-                    <th>DOB</th>
-                    <th>Interests</th>
-                    <th>Address</th>
-                    <th>Action</th> --}}
-                    {{#each this.tableColumns as |col index|}}
-                        <th {{on "click" (fn this.columnSort index)}}>{{col}}</th>
+                    {{#each this.copyCol as |col index|}}
+                        {{#if col.visibility}}
+                        <th {{on "click" (fn this.columnSort index)}}>{{col.name}}</th>
+                        {{/if}}
                     {{/each}}
                 </tr>
             </thead>
@@ -52,24 +65,36 @@
                     as |student index|
                 >
                     <tr>
-                        <td>{{add index 1}}</td>
-                        <td>{{student.rollno}}</td>
-                        <td>{{student.name}}</td>
-                        <td>{{student.dept}}</td>
-                        <td>{{student.dob}}</td>
-                        <td>
-                            {{#each (slice student.interests 0 3) as |interest index|}}
-                                {{if index ','}} {{interest}}
-                            {{/each}}
-                        </td>
-                        <td>{{student.address}}</td>
-                        <td>
-                            <div class="table-div">
-                                <LinkTo @route="student.edit" @model={{student.id}} class="edit btn">Edit</LinkTo>
-                                <button type="button" class="btn" {{on "click" (fn this.deleteStudent student)}}>Delete</button>
-                            </div>
-                        </td>
+                        {{#each this.copyCol as |col|}}
+                            {{#if col.visibility}}
+                                <td>
+                                    {{#if (eq col.name "S.No")}}
+                                        {{add index 1}}
+                                    {{else if (eq col.name "Roll No")}}
+                                        {{student.rollno}}
+                                    {{else if (eq col.name "Name")}}
+                                        {{student.name}}
+                                    {{else if (eq col.name "Department")}}
+                                        {{student.dept}}
+                                    {{else if (eq col.name "DOB")}}
+                                        {{student.dob}}
+                                    {{else if (eq col.name "Interests")}}
+                                    {{#each (slice student.interests 0 3) as |interest idx|}}
+                                        {{if idx ", "}}{{interest}}
+                                    {{/each}}
+                                    {{else if (eq col.name "Address")}}
+                                        {{student.address}}
+                                    {{else if (eq col.name "Action")}}
+                                        <div class="table-div">
+                                            <LinkTo @route="student.edit" @model={{student.id}} class="edit btn">Edit</LinkTo>
+                                            <button type="button" class="btn" {{on "click" (fn this.deleteStudent student)}}>Delete</button>
+                                        </div>
+                                    {{/if}}
+                                </td>
+                            {{/if}}
+                        {{/each}}
                     </tr>
+
                 </VerticalCollection>
             </tbody>
         </table>

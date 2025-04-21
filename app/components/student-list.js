@@ -18,7 +18,15 @@ export default class StudentList extends Component{
     @tracked isSort=false;
     @tracked sortField=null;
 
-    @tracked tableColumns=["S.No","Roll No","Name","Department","DOB","Interests","Address","Action"];
+    
+    @tracked originalColumn=[...this.studentData.columns];
+    @tracked copyCol=this.studentData.columns.map((col) => {
+        return {
+            name: col,
+            visibility: true,
+        };
+    });
+
     @tracked sortable=['id','rollno','name','dept','dob','interests','address','action'];
 
     @tracked columns=["rollno","name","dept","address","interests"];
@@ -26,7 +34,6 @@ export default class StudentList extends Component{
 
     get Students() {
         let students = [...this.allStudents];
-        console.log("Get Students");
         if (this.isSort) {
             if(this.sortField==='id'||this.sortField==='action'){
                 return students;
@@ -34,9 +41,7 @@ export default class StudentList extends Component{
             if(this.sortField==="interests"){
                 students=[...students].sort((a,b)=>{
                     let aJoin=a.interests.join(',')
-                    console.log(aJoin);
                     let bJoin=b.interests.join(',')
-                    console.log(bJoin);
                     return aJoin.localeCompare(bJoin);
                 })
             }
@@ -51,8 +56,6 @@ export default class StudentList extends Component{
                 students = [...students].sort((a, b) => a[this.sortField].localeCompare(b[this.sortField]));
             }
         }
-      
-        console.log(students);
         return students.slice(0, this.currentPage * this.page);
       }
       
@@ -61,18 +64,15 @@ export default class StudentList extends Component{
         super(...arguments);
         this.loadInitial.perform();
     }
-
+    
     @action
     columnSort(index){
-        console.log("this.sort",this.isSort);
         this.isSort=!this.isSort;
         this.sortField=this.sortable[index];
-        console.log(this.sortField);
     }
 
     @task
     *loadInitial(){
-        console.log("Loading Initial")
         this.isLoading=true;
         yield timeout(300);
         this.hasMore=this.allStudents.length>this.page;
@@ -81,9 +81,6 @@ export default class StudentList extends Component{
 
     @task
     *firstReached(){
-        console.log("first reached1");
-        console.log("first Reached 1",this.isLoading);
-        console.log("first reachec 1",this.hasMore);
         if(this.currentPage<=1 || this.isLoading){
             return;
         }
@@ -91,15 +88,10 @@ export default class StudentList extends Component{
         yield timeout(500);
         this.currentPage--;
         this.isLoading=false;
-        console.log("First Reached2");
     }
 
     @task
     *lastReached(){
-        console.log("lastReached1")
-        console.log("lastreached1",this.isLoading);
-        console.log("lastreached1",this.hasMore);
-        console.log("Last reached",this.currentPage*this.page);
         if(this.isLoading || !this.hasMore){
             return;
         }
@@ -108,7 +100,6 @@ export default class StudentList extends Component{
         this.currentPage++;
         this.hasMore=this.currentPage*this.page<this.allStudents.length;
         this.isLoading=false;
-        console.log("Last Reached2");
     }
 
     @task({restartable:true})
@@ -138,7 +129,6 @@ export default class StudentList extends Component{
                 }
             });
         }
-        console.log("After search");
         this.hasMore=this.allStudents.length>this.page;
     }
 
@@ -179,8 +169,27 @@ export default class StudentList extends Component{
     @action
     updateColumn(selected){
         this.selectedColumns=selected;
-        console.log('Searching');
         this.searchText.perform();
     }
+
+    @action
+    updateColumns(){
+        console.log("Selected");
+    }
+
+    @action
+    toggleColumn(col) {
+      this.copyCol = this.copyCol.map(c =>
+        c.name === col ? { ...c, visibility: !c.visibility } : c
+      );
+    }
+
+    @action
+    checked(col) {
+        let column= this.copyCol.find(c => c.name === col);
+        console.log("Visibility",column.visibility);
+        return column.visibility;
+    }
 }
+
 
