@@ -31,10 +31,8 @@ export default class StudentList extends Component{
 
     @tracked columns=["rollno","name","dept","address","interests"];
     @tracked selectedColumns=[];
-    @tracked result=Object.keys(this.allStudents[0].result);
-
+    
     get Students() {
-        console.log(Object.keys(this.allStudents[0].result));
         let students = [...this.allStudents];
         if (this.isSort) {
             if(this.sortField==='id'||this.sortField==='action'){

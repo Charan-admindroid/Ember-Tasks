@@ -100,9 +100,9 @@
                             <table class="sub-table">
                             <thead class="thead">
                                 <tr>
-                                    {{#each this.result as |res|}}
-                                        <th>{{res}}</th>
-                                    {{/each}}
+                                    {{#each-in student.result as |key res|}}
+                                        <th>{{key}}</th>
+                                    {{/each-in}}
                                 </tr>
                             </thead>
                             <tbody class="tbody">
