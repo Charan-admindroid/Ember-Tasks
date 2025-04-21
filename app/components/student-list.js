@@ -10,14 +10,14 @@ export default class StudentList extends Component{
     @tracked search="";
     @tracked allStudents=[...this.studentData.students];
     @tracked currentPage=1;
-    @tracked page=30;
+    @tracked page=25;
     @tracked isLoading=false;
     @tracked hasMore=true;
     @service router;
     @service flashMessages;
     @tracked isSort=false;
     @tracked sortField=null;
-
+    @tracked Row="";
     
     @tracked originalColumn=[...this.studentData.columns];
     @tracked copyCol=this.studentData.columns.map((col) => {
@@ -31,8 +31,10 @@ export default class StudentList extends Component{
 
     @tracked columns=["rollno","name","dept","address","interests"];
     @tracked selectedColumns=[];
+    @tracked result=Object.keys(this.allStudents[0].result);
 
     get Students() {
+        console.log(Object.keys(this.allStudents[0].result));
         let students = [...this.allStudents];
         if (this.isSort) {
             if(this.sortField==='id'||this.sortField==='action'){
@@ -65,6 +67,12 @@ export default class StudentList extends Component{
         this.loadInitial.perform();
     }
     
+
+    @action
+    toggleRow(student){
+        this.Row=this.Row===student?null:student;
+    }
+
     @action
     columnSort(index){
         this.isSort=!this.isSort;
@@ -190,6 +198,7 @@ export default class StudentList extends Component{
         console.log("Visibility",column.visibility);
         return column.visibility;
     }
+    
 }
 
 

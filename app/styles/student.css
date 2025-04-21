@@ -72,6 +72,15 @@ body::selection{
     table-layout: fixed;
 }
 
+.ember-table{
+    width:100%;
+    margin:0 auto;
+    border-collapse: collapse;
+    height: 100%;
+    text-align: center;
+    table-layout: fixed;  
+}
+
 th,td{
     border:1px solid gold;
     padding:10px;
@@ -82,6 +91,7 @@ th{
     font-weight: 700;
     color: rgb(218 165 32);
     cursor: pointer;
+    resize: horizontal;
 }
 
 
@@ -90,6 +100,12 @@ td{
     font-size: 16px;
     font-weight: 500;
     color: rgb(0 0 0);
+    cursor: pointer;
+}
+
+.sub-table{
+  width: 100%;
+  border-collapse: collapse;
 }
 
 .table-div button:hover{
@@ -207,7 +223,6 @@ td{
     background-color:rgb(128 128 128 / 70.8%);
     border-radius: 10px;
 }
-
 
 
 .add-form-div label{
