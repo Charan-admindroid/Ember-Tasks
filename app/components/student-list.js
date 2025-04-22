@@ -3,7 +3,7 @@ import Component from "@glimmer/component";
 import { inject as service } from '@ember/service';
 import { tracked } from "@glimmer/tracking";
 import { task, timeout } from 'ember-concurrency';
-import {action, get} from '@ember/object';
+import {action} from '@ember/object';
 
 export default class StudentList extends Component{
     @service studentData;

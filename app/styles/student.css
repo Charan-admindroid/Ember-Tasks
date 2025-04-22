@@ -85,7 +85,6 @@ th{
     cursor: pointer;
     resize: none;
     position: relative;
-    /* user-select: none; */
     overflow: hidden;
 }
 
