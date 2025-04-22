@@ -64,21 +64,13 @@ body::selection{
 }
 
 .list-table{
-    width:100%;
+    width:auto;
+    max-width: 100%;
     margin:0 auto;
     border-collapse: collapse;
     height: 100%;
     text-align: center;
     table-layout: fixed;
-}
-
-.ember-table{
-    width:100%;
-    margin:0 auto;
-    border-collapse: collapse;
-    height: 100%;
-    text-align: center;
-    table-layout: fixed;  
 }
 
 th,td{
@@ -91,7 +83,10 @@ th{
     font-weight: 700;
     color: rgb(218 165 32);
     cursor: pointer;
-    resize: horizontal;
+    resize: none;
+    position: relative;
+    /* user-select: none; */
+    overflow: hidden;
 }
 
 
@@ -520,6 +515,10 @@ input:focus{
   user-select: none;
 }
 
+textarea{
+  user-select: none;
+}
+
 .timer{
   position: absolute;
   right: 200px;
@@ -556,4 +555,14 @@ input:focus{
   margin:6px 0;
   font-weight: 600;
   cursor: pointer;
+}
+
+.resizer{
+  position:absolute;
+  top: 0;
+  right: 0;
+  width: 5px;
+  height: 100%;
+  cursor: ew-resize;
+  background-color: transparent;
 }

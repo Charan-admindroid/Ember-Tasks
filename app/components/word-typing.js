@@ -3,7 +3,6 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import {action} from '@ember/object';
 import {inject as service} from '@ember/service';
-import { task,timeout } from "ember-concurrency";
 export default class WordTyping extends Component{
     @tracked characters='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     @tracked word="Hello have a nice day!";

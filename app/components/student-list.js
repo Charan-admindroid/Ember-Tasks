@@ -3,7 +3,7 @@ import Component from "@glimmer/component";
 import { inject as service } from '@ember/service';
 import { tracked } from "@glimmer/tracking";
 import { task, timeout } from 'ember-concurrency';
-import {action} from '@ember/object';
+import {action, get} from '@ember/object';
 
 export default class StudentList extends Component{
     @service studentData;
@@ -20,12 +20,7 @@ export default class StudentList extends Component{
     @tracked Row="";
     
     @tracked originalColumn=[...this.studentData.columns];
-    @tracked copyCol=this.studentData.columns.map((col) => {
-        return {
-            name: col,
-            visibility: true,
-        };
-    });
+    @tracked copyCol=[];
 
     @tracked sortable=['id','rollno','name','dept','dob','interests','address','action'];
 
@@ -62,13 +57,30 @@ export default class StudentList extends Component{
 
     constructor(){
         super(...arguments);
+        let savedWidths = localStorage.getItem('columnWidths');
+
+        if (savedWidths) {
+            this.copyCol = JSON.parse(savedWidths);
+        } else {
+            this.copyCol = this.studentData.columns.map((col) => ({
+                name: col,
+                visibility: true,
+                width: 300
+            }));
+        }
         this.loadInitial.perform();
     }
     
 
     @action
-    toggleRow(student){
+    toggleRow(student,event){
+        if(event.target.nodeName==='BUTTON'){
+            return;
+        }
         this.Row=this.Row===student?null:student;
+        console.log("Student",student);
+        console.log('is ROw',this.Row);
+        console.log("Event",event.target.nodeName);
     }
 
     @action
@@ -94,6 +106,42 @@ export default class StudentList extends Component{
         yield timeout(500);
         this.currentPage--;
         this.isLoading=false;
+    }
+
+    @action
+    startResize(col, event) {
+        event.stopPropagation();
+        console.log("Dragging");
+        let startX = event.clientX;
+        console.log("StartX",startX)
+        let startWidth = col.width; 
+        console.log("StartX",startWidth)
+        const onMouseMove = (e) => {
+            let newWidth = startWidth + (e.clientX - startX);
+            console.log("New Width",newWidth);
+            if (newWidth > 50) {
+                const updatedCols = this.copyCol.map((c) => {
+                    if (c.name === col.name) {
+                        return { ...c, width: newWidth };
+                    }
+                    return c;
+                });
+            
+                this.copyCol = updatedCols; 
+                localStorage.setItem('columnWidths', JSON.stringify(this.copyCol));
+            }
+            
+        };
+
+        const onMouseUp = () => {
+            console.log("Removed");
+            console.log("width",this.copyCol);
+            window.removeEventListener('mousemove', onMouseMove);
+            window.removeEventListener('mouseup', onMouseUp);
+        };
+
+        window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('mouseup', onMouseUp);
     }
 
     @task
@@ -161,10 +209,17 @@ export default class StudentList extends Component{
 
     @action
     deleteStudent(student){
-        this.allStudents=this.allStudents.filter((s)=>s.id!==student.id);
-        this.studentData.students=this.studentData.students.filter((s)=>s.id!==student.id);
-        this.flashMessages.success(`Successfully Deleted Student ${student.name} Data`);
-        this.hasMore=this.page<this.allStudents.length;
+        if(this.isRow===student){
+            this.Row=null;
+        }
+        try{
+            this.allStudents=this.allStudents.filter((s)=>s.id!==student.id);
+            this.studentData.students=this.studentData.students.filter((s)=>s.id!==student.id);
+            this.flashMessages.success(`Successfully Deleted Student ${student.name} Data`);
+            this.hasMore=this.page<this.allStudents.length;
+        }catch(err){
+            this.flashMessages.danger(err);
+        }
     }
 
     @action
@@ -188,6 +243,7 @@ export default class StudentList extends Component{
       this.copyCol = this.copyCol.map(c =>
         c.name === col ? { ...c, visibility: !c.visibility } : c
       );
+      localStorage.setItem('columnWidths', JSON.stringify(this.copyCol));
     }
 
     @action

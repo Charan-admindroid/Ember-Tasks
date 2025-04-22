@@ -16,9 +16,15 @@ export default class StudentAdd extends Component{
         dept:"CSE",
         interests:"",
         address:"",
+        result:{
+          grade:"A+",
+          CGPA:"",
+          attendance:"",
+          backlogs:""
+        }
     }
-    @tracked departments=["CSE","CSE-AI","ECE","CE","MECH","EEE"]
-    
+    @tracked departments=["CSE","CSE-AI","ECE","CIVIL","MECH","EEE"]
+    @tracked grades=["A+","A","B+","B","C","D","E"]
     @tracked Interests = [
         // Sports
         {groupName:'Sports', options:[ 'Cricket', 'Football', 'Basketball', 'Volleyball', 'Badminton',
@@ -88,6 +94,28 @@ export default class StudentAdd extends Component{
     }
 
     @action
+    updateGrade(selectedGrade){
+      this.newStudent={
+        ...this.newStudent,
+        result:{
+          ...this.newStudent.result,
+          grade:selectedGrade
+        }
+      }
+    }
+
+    @action
+    updateResult(attr,event){
+      this.newStudent={
+        ...this.newStudent,
+        result:{
+          ...this.newStudent.result,
+          [attr]:event.target.value
+        }
+      }
+    }
+
+    @action
     addStudent(e){
         e.preventDefault();
         this.studentData.students=[
@@ -104,7 +132,13 @@ export default class StudentAdd extends Component{
             dept:"",
             interests:"",
             dob:"",
-            address:""
+            address:"",
+            result:{
+              grade:"A+",
+              CGPA:"",
+              attendance:"",
+              backlogs:""
+            }
         }
 
         this.router.transitionTo('student');

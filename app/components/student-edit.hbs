@@ -47,6 +47,39 @@
             </label>
             <input type="text" value={{this.editStudent.address}} {{on 'input' (fn this.updateStudent 'address')}} placeholder="Enter your city" id="city" required/>
         </div>
+        <div class="add-form-3 add-form-div">
+            <label>
+                Grade
+            </label>
+            <PowerSelect
+                @options={{this.grades}}
+                @selected={{this.editStudent.result.grade}}
+                @onChange={{this.updateGrade}}
+                @placeholder="Select Grade"
+                @allowClear={{true}}
+                as |grade|
+            >
+                {{grade}}
+            </PowerSelect>
+        </div>
+        <div class="add-form-6 add-form-div"> 
+            <label for="cgpa">
+                CGPA:
+            </label>
+            <input type="text" placeholder="Enter your CGPA" {{on "input" (fn this.updateResult "CGPA")}} value={{this.editStudent.result.CGPA}} id="cgpa"/>
+        </div>
+        <div class="add-form-6 add-form-div"> 
+            <label for="attendance">
+                Attendence%:
+            </label>
+            <input type="text" placeholder="Enter your Attendence%" {{on "input" (fn this.updateResult "attendance")}} value={{this.editStudent.result.attendance}} id="attendence"/>
+        </div>
+        <div class="add-form-6 add-form-div"> 
+            <label for="backlogs">
+                Backlogs:
+            </label>
+            <input type="text" placeholder="Enter your Backlogs" {{on "input" (fn this.updateResult "backlogs")}} value={{this.editStudent.result.backlogs}} id="backlogs"/>
+        </div>
         <div class="add-form-btn">
             <button type="submit" {{on-key "Enter"}}>Edit Student</button>
             <button type="button" {{on "click" this.student}} {{on-key 'Escape'}}>Cancel</button>

@@ -29,7 +29,7 @@
             @searchEnabled={{false}}
             @closeOnSelect={{false}}
             as |col|
-            >
+        >
             <label>
                 <input 
                     type="checkbox" 
@@ -47,7 +47,17 @@
                 <tr>
                     {{#each this.copyCol as |col index|}}
                         {{#if col.visibility}}
-                            <th {{on "click" (fn this.columnSort index)}}>{{col.name}}</th>
+                            <th 
+                                style="width: {{col.width}}px;" 
+                                {{on "click" (fn this.columnSort index)}}
+                            >
+                                {{col.name}}
+                                <span
+                                    class="resizer"
+                                    {{on "mousedown" (fn this.startResize col)}}
+                                ></span>
+                            </th>
+                            
                         {{/if}}
                     {{/each}}
                 </tr>

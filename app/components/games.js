@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 import Component from "@glimmer/component";
 import { task,timeout } from "ember-concurrency";
-import {action} from '@ember/object';
 import { tracked } from "@glimmer/tracking";
 import {inject as service} from '@ember/service';
 

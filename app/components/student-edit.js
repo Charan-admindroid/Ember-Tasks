@@ -11,8 +11,8 @@ export default class StudentEdit extends Component{
     @tracked editStudent={
         ...this.args.student
     }
-    
-    @tracked departments=["CSE","CSE-AI","ECE","CE","MECH","EEE"]
+    @tracked grades=["A+","A","B+","B","C","D","E"]
+    @tracked departments=["CSE","CSE-AI","ECE","CIVIL","MECH","EEE"]
     @tracked Interests = [
         // Sports
         {groupName:'Sports', options:[ 'Cricket', 'Football', 'Basketball', 'Volleyball', 'Badminton',
@@ -70,6 +70,28 @@ export default class StudentEdit extends Component{
             ...this.editStudent,
             [attr]:event.target.value
         }
+    }
+
+    @action
+    updateGrade(selectedGrade){
+      this.editStudent={
+        ...this.editStudent,
+        result:{
+          ...this.editStudent.result,
+          grade:selectedGrade
+        }
+      }
+    }
+
+    @action
+    updateResult(attr,event){
+      this.editStudent={
+        ...this.editStudent,
+        result:{
+          ...this.editStudent.result,
+          [attr]:event.target.value
+        }
+      }
     }
 
     @action
